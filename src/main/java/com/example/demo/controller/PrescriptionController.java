@@ -29,6 +29,11 @@ public class PrescriptionController {
         return prescriptionService.getPrescriptionById(prescriptionId);
     }
 
+    @GetMapping("/patient/{patientId}")
+    public List<Prescription> getPrescriptionsByPatientId(@PathVariable("patientId") Long patientId) {
+        return prescriptionService.getPrescriptionsByPatientId(patientId);
+    }
+
     @PostMapping
     public void addPrescription(@RequestBody Prescription prescription) {
         prescriptionService.addPrescription(prescription);

@@ -22,6 +22,10 @@ public class PrescriptionService {
         return prescriptionRepository.findAll();
     }
 
+    public List<Prescription> getPrescriptionsByPatientId(Long patientId) {
+        return prescriptionRepository.findByPatientId(patientId);
+    }
+
     public Prescription getPrescriptionById(Long prescriptionId) {
         return prescriptionRepository.findById(prescriptionId)
                 .orElseThrow(() -> new IllegalStateException("Prescription with ID " + prescriptionId + " does not exist."));
