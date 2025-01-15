@@ -1,10 +1,10 @@
-package com.example.demo.patient;
+package com.example.demo.controller;
 
+import com.example.demo.entity.Patient;
+import com.example.demo.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @RestController
@@ -22,6 +22,11 @@ public class PatientController {
     public List<Patient> getPatients()
     {
         return patientService.getPatients();
+    }
+
+    @GetMapping(path = "{patientId}")
+    public Patient getPatientById(@PathVariable("patientId") Long patientId) {
+        return patientService.getPatientById(patientId);
     }
 
     @PostMapping

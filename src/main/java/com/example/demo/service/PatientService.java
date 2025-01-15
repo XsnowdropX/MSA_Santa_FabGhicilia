@@ -1,12 +1,11 @@
-package com.example.demo.patient;
+package com.example.demo.service;
 
+import com.example.demo.entity.Patient;
+import com.example.demo.repository.PatientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,6 +23,11 @@ public class PatientService {
     public List<Patient> getPatients()
     {
         return patientRepository.findAll();
+    }
+
+    public Patient getPatientById(Long patientId) {
+        return patientRepository.findById(patientId)
+                .orElseThrow(() -> new IllegalStateException("Patient with ID " + patientId + " does not exist."));
     }
 
     public void addNewPatient(Patient patient) {

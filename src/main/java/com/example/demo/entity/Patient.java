@@ -1,4 +1,4 @@
-package com.example.demo.patient;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
