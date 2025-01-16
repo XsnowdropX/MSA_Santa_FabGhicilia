@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -19,42 +18,34 @@ public class Patient {
             generator = "patient_sequence"
     )
     private Long id;
+
     private String first_name;
     private String last_name;
     private LocalDate dob;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
     private Long health_id;
+
     @Transient
     private Integer age;
 
-    public Patient() {
-    }
+    public Patient() {}
 
-    public Patient(Long id,
-                   String first_name,
-                   String last_name,
-                   LocalDate dob,
-                   String email,
-                   Long health_id) {
-        this.id = id;
+    public Patient(String first_name, String last_name, LocalDate dob, String email, Long health_id, String password) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.dob = dob;
         this.email = email;
         this.health_id = health_id;
+        this.password = password;
     }
 
-    public Patient(String first_name,
-                   String last_name,
-                   LocalDate dob,
-                   String email,
-                   Long health_id) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.dob = dob;
-        this.email = email;
-        this.health_id = health_id;
-    }
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -104,25 +95,20 @@ public class Patient {
         this.health_id = health_id;
     }
 
-    public Integer getAge()
-    {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getAge() {
         return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
-    public void setAge(Integer age)
-    {
-        this.age=age;
-    }
-
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", dob=" + dob +
-                ", email='" + email + '\'' +
-                ", health_id=" + health_id +
-                '}';
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
+

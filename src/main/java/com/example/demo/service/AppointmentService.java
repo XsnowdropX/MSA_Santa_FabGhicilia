@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Appointment;
+import com.example.demo.entity.Prescription;
 import com.example.demo.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class AppointmentService {
     public Appointment getAppointmentById(Long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("Appointment with ID " + id + " does not exist."));
+    }
+
+    public List<Appointment> getAppointmentByPatientId(Long patientId) {
+        return appointmentRepository.findByPatientId(patientId);
     }
 
     public void createAppointment(Appointment appointment) {

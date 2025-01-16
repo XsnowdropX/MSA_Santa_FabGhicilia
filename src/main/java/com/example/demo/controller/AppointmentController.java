@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Appointment;
+import com.example.demo.entity.Prescription;
 import com.example.demo.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,11 @@ public class AppointmentController {
     @GetMapping("/{id}")
     public Appointment getAppointmentById(@PathVariable Long id) {
         return appointmentService.getAppointmentById(id);
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public List<Appointment> getAppointmentByPatientId(@PathVariable("patientId") Long patientId) {
+        return appointmentService.getAppointmentByPatientId(patientId);
     }
 
     @PostMapping

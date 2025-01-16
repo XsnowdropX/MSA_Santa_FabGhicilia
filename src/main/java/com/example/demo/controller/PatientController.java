@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.Patient;
 import com.example.demo.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,20 @@ public class PatientController {
     @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+        try {
+            Patient patient = patientService.login(email, password);
+            return ResponseEntity.ok(patient);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+    @PostMapping("/register")
+    public void registerPatient(@RequestBody Patient patient) {
+        patientService.registerNewPatient(patient);
     }
 
     @GetMapping

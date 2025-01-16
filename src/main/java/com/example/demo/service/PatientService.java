@@ -30,6 +30,32 @@ public class PatientService {
                 .orElseThrow(() -> new IllegalStateException("Patient with ID " + patientId + " does not exist."));
     }
 
+    public Patient login(String email, String password) {
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email must not be null or empty.");
+        }
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Password must not be null or empty.");
+        }
+
+        System.out.println("Attempting login with email: " + email + ", password: " + password);
+
+        return patientRepository.findByEmailAndPassword(email, password)
+                .orElseThrow(() -> {
+                    System.out.println("No patient found with email: " + email + " and password: " + password);
+                    return new IllegalStateException("Invalid email or password.");
+                });
+    }
+
+    public void registerNewPatient(Patient patient) {
+        Optional<Patient> existingPatient = patientRepository.findPatientByEmail(patient.getEmail());
+        if (existingPatient.isPresent()) {
+            throw new IllegalStateException("Email is already taken.");
+        }
+
+        patientRepository.save(patient);
+    }
+
     public void addNewPatient(Patient patient) {
         Optional<Patient> patientOptional = patientRepository.findPatientByEmail(patient.getEmail());
         if(patientOptional.isPresent())
